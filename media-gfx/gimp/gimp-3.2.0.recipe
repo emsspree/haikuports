@@ -21,13 +21,13 @@ ARCHITECTURES="ALL !x86_gcc2"
 SECONDARY_ARCHITECTURES="x86"
 
 GLOBAL_WRITABLE_FILES="
-	settings/gimp/3.2/controllerrc keep-old
-	settings/gimp/3.2/gimp.css keep-old
-	settings/gimp/3.2/gimprc keep-old
-	settings/gimp/3.2/sessionrc keep-old
-	settings/gimp/3.2/templaterc keep-old
-	settings/gimp/3.2/toolrc keep-old
-	settings/gimp/3.2/unitrc keep-old
+	settings/gimp/3.0/controllerrc keep-old
+	settings/gimp/3.0/gimp.css keep-old
+	settings/gimp/3.0/gimprc keep-old
+	settings/gimp/3.0/sessionrc keep-old
+	settings/gimp/3.0/templaterc keep-old
+	settings/gimp/3.0/toolrc keep-old
+	settings/gimp/3.0/unitrc keep-old
 	"
 
 commandSuffix=$secondaryArchSuffix
@@ -52,23 +52,23 @@ PROVIDES="
 	cmd:gimp_debug_tool$commandSuffix = $portVersion
 	cmd:gimp_debug_tool_3$commandSuffix = $portVersion
 	cmd:gimp_debug_tool_3.2$commandSuffix = $portVersion
-	cmd:gimp_script_fu_interpreter_3.2$commandSuffix = $portVersion
+	cmd:gimp_script_fu_interpreter_3.0$commandSuffix = $portVersion
 	cmd:gimp_test_clipboard$commandSuffix = $portVersion
 	cmd:gimp_test_clipboard_3$commandSuffix = $portVersion
 	cmd:gimp_test_clipboard_3.2$commandSuffix = $portVersion
 	cmd:gimptool$commandSuffix = $portVersion
 	cmd:gimptool_3$commandSuffix = $portVersion
 	cmd:gimptool_3.2$commandSuffix = $portVersion
-	lib:libgimp_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimp_scriptfu_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpbase_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpcolor_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpconfig_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpmath_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpmodule_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpthumb_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpui_3.2$secondaryArchSuffix = $libVersionCompat
-	lib:libgimpwidgets_3.2$secondaryArchSuffix = $libVersionCompat
+	lib:libgimp_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimp_scriptfu_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpbase_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpcolor_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpconfig_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpmath_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpmodule_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpthumb_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpui_3.0$secondaryArchSuffix = $libVersionCompat
+	lib:libgimpwidgets_3.0$secondaryArchSuffix = $libVersionCompat
 	"
 REQUIRES="
 	haiku$secondaryArchSuffix
@@ -219,11 +219,11 @@ BUILD()
 		--datadir="$dataDir" \
 		--localedir="$dataDir/locale" \
 		--sysconfdir="$settingsDir" \
-		-Dgimpdir="GIMP" \
 		-Dshmem-type=posix \
 		-Dcheck-update=no \
 		-Dxcursor=disabled \
 		-Denable-console-bin=true
+		#-Dgimpdir="" \ # custom path
 
 	ninja -v -C Build
 
@@ -240,9 +240,9 @@ INSTALL()
 	ln -s $appsDir/GIMP $commandBinDir/gimp-3.2
 
 	# Swap System and Default theme
-	mv $dataDir/gimp/3.2/themes/System $dataDir/gimp/3.2/themes/Temp
-	mv $dataDir/gimp/3.2/themes/Default $dataDir/gimp/3.2/themes/System
-	mv $dataDir/gimp/3.2/themes/Temp $dataDir/gimp/3.2/themes/Default
+	mv $dataDir/gimp/3.0/themes/System $dataDir/gimp/3.0/themes/Temp
+	mv $dataDir/gimp/3.0/themes/Default $dataDir/gimp/3.0/themes/System
+	mv $dataDir/gimp/3.0/themes/Temp $dataDir/gimp/3.0/themes/Default
 
 	# Remove unneeded files
 	rm -rf \
@@ -271,7 +271,7 @@ INSTALL()
 
 	# doc package
 	mkdir -p $documentationDir/packages/
-	mv $dataDir/doc/gimp-3.2 $documentationDir/packages
+	mv $dataDir/doc/gimp-3.0 $documentationDir/packages
 	rm -rf $dataDir/doc
 	packageEntries doc \
 		$documentationDir/packages
